@@ -1,13 +1,11 @@
 package Controller
 
-import Adapters.CategoryAdapter
 import Adapters.CategoryRecyclerAdapter
-import Model.Category
 import Services.DataService
+import Utilities.EXTRA_CATEGORY
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.widget.ArrayAdapter
-import android.widget.LinearLayout
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.nabigha.coderswag.R
 import kotlinx.android.synthetic.main.activity_main.*
@@ -20,7 +18,11 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        adapter = CategoryRecyclerAdapter(this, DataService.categories)
+        adapter = CategoryRecyclerAdapter(this, DataService.categories) {category -> println(category.title)
+        val productIntent = Intent(this , ProductActivity::class.java)
+        productIntent.putExtra(EXTRA_CATEGORY, category.title)
+        startActivity(productIntent)
+        }
         categoryListView.adapter =adapter
 
         val layoutManager = LinearLayoutManager(this)
